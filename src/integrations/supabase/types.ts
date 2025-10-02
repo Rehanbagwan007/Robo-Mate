@@ -14,16 +14,230 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      awareness_content: {
+        Row: {
+          category: string
+          content: string
+          id: string
+          image_url: string | null
+          published_at: string | null
+          published_by: string | null
+          title: string
+          views: number | null
+        }
+        Insert: {
+          category: string
+          content: string
+          id?: string
+          image_url?: string | null
+          published_at?: string | null
+          published_by?: string | null
+          title: string
+          views?: number | null
+        }
+        Update: {
+          category?: string
+          content?: string
+          id?: string
+          image_url?: string | null
+          published_at?: string | null
+          published_by?: string | null
+          title?: string
+          views?: number | null
+        }
+        Relationships: []
+      }
+      citizen_reports: {
+        Row: {
+          admin_response: string | null
+          category: string
+          created_at: string | null
+          description: string
+          id: string
+          image_url: string | null
+          location_lat: number | null
+          location_lng: number | null
+          location_name: string | null
+          priority: string | null
+          resolved_at: string | null
+          status: string | null
+          title: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          admin_response?: string | null
+          category: string
+          created_at?: string | null
+          description: string
+          id?: string
+          image_url?: string | null
+          location_lat?: number | null
+          location_lng?: number | null
+          location_name?: string | null
+          priority?: string | null
+          resolved_at?: string | null
+          status?: string | null
+          title: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          admin_response?: string | null
+          category?: string
+          created_at?: string | null
+          description?: string
+          id?: string
+          image_url?: string | null
+          location_lat?: number | null
+          location_lng?: number | null
+          location_name?: string | null
+          priority?: string | null
+          resolved_at?: string | null
+          status?: string | null
+          title?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      volunteer_activities: {
+        Row: {
+          activity_type: string
+          created_at: string | null
+          created_by: string | null
+          current_volunteers: number | null
+          description: string
+          id: string
+          location: string
+          max_volunteers: number | null
+          scheduled_date: string
+          status: string | null
+          title: string
+        }
+        Insert: {
+          activity_type: string
+          created_at?: string | null
+          created_by?: string | null
+          current_volunteers?: number | null
+          description: string
+          id?: string
+          location: string
+          max_volunteers?: number | null
+          scheduled_date: string
+          status?: string | null
+          title: string
+        }
+        Update: {
+          activity_type?: string
+          created_at?: string | null
+          created_by?: string | null
+          current_volunteers?: number | null
+          description?: string
+          id?: string
+          location?: string
+          max_volunteers?: number | null
+          scheduled_date?: string
+          status?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      volunteer_registrations: {
+        Row: {
+          activity_id: string | null
+          attended: boolean | null
+          id: string
+          registered_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          activity_id?: string | null
+          attended?: boolean | null
+          id?: string
+          registered_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          activity_id?: string | null
+          attended?: boolean | null
+          id?: string
+          registered_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "volunteer_registrations_activity_id_fkey"
+            columns: ["activity_id"]
+            isOneToOne: false
+            referencedRelation: "volunteer_activities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "citizen"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +364,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "citizen"],
+    },
   },
 } as const
