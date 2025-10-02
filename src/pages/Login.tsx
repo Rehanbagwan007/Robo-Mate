@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -6,24 +6,53 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Waves } from 'lucide-react';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuthStore } from '@/store/useAuthStore';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { user, setUser } = useAuthStore();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      // Authentication will be implemented with Lovable Cloud
-      toast.success(isLogin ? 'Login successful!' : 'Account created successfully!');
-      navigate('/dashboard');
-    } catch (error) {
-      toast.error('Authentication failed. Please try again.');
+      if (isLogin) {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        if (error) throw error;
+        setUser(data.user);
+        toast.success('Login successful!');
+        navigate('/dashboard');
+      } else {
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: { full_name: fullName },
+            emailRedirectTo: `${window.location.origin}/dashboard`,
+          },
+        });
+        if (error) throw error;
+        toast.success('Account created successfully! You can now sign in.');
+        setIsLogin(true);
+      }
+    } catch (error: any) {
+      toast.error(error.message || 'Authentication failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -43,6 +72,19 @@ const Login = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {!isLogin && (
+              <div className="space-y-2">
+                <Label htmlFor="fullName">Full Name</Label>
+                <Input
+                  id="fullName"
+                  type="text"
+                  placeholder="John Doe"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required={!isLogin}
+                />
+              </div>
+            )}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -63,6 +105,7 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                minLength={6}
               />
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
