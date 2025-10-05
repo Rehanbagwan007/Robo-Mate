@@ -66,8 +66,8 @@ export default function Layout() {
   }
 
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-gradient-to-br from-background via-background to-primary/5">
+    <SidebarProvider defaultOpen={true}>
+      <div className="min-h-screen flex w-full bg-background">
         <AppSidebar userRole={userRole} />
         <main className="flex-1 overflow-auto">
           <Outlet />

@@ -54,15 +54,21 @@ export function AppSidebar({ userRole }: AppSidebarProps) {
   };
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-sidebar-border bg-sidebar">
-      <div className="p-4 border-b border-sidebar-border flex items-center justify-between">
-        <h2 className="text-lg font-bold text-sidebar-foreground">AquariSense</h2>
-        <SidebarTrigger className="text-sidebar-foreground" />
+    <Sidebar collapsible="icon" className="border-r border-sidebar-border bg-sidebar shadow-sm">
+      <div className="p-4 border-b border-sidebar-border flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
+            <Droplets className="h-5 w-5 text-primary-foreground" />
+          </div>
+          <h2 className="text-lg font-bold text-sidebar-foreground group-data-[collapsible=icon]:hidden">AquariSense</h2>
+        </div>
       </div>
       
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>{userRole === 'admin' ? 'Admin Panel' : 'Citizen Portal'}</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-xs text-muted-foreground uppercase">
+            {userRole === 'admin' ? 'Admin Panel' : 'Citizen Portal'}
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -72,8 +78,8 @@ export function AppSidebar({ userRole }: AppSidebarProps) {
                       to={item.url}
                       className={({ isActive }) =>
                         isActive 
-                          ? 'bg-sidebar-accent text-sidebar-accent-foreground font-medium' 
-                          : 'text-sidebar-foreground hover:bg-sidebar-accent/50'
+                          ? 'bg-primary text-primary-foreground font-medium hover:bg-primary/90' 
+                          : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                       }
                     >
                       <item.icon className="h-4 w-4" />
@@ -88,9 +94,9 @@ export function AppSidebar({ userRole }: AppSidebarProps) {
       </SidebarContent>
 
       <SidebarFooter className="p-4 border-t border-sidebar-border">
-        <Button variant="ghost" className="w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent" onClick={handleLogout}>
+        <Button variant="ghost" className="w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground" onClick={handleLogout}>
           <LogOut className="h-4 w-4 mr-2" />
-          Logout
+          <span className="group-data-[collapsible=icon]:hidden">Logout</span>
         </Button>
       </SidebarFooter>
     </Sidebar>

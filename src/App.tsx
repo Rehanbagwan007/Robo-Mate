@@ -12,6 +12,7 @@ import MyReports from "./pages/citizen/MyReports";
 import Volunteer from "./pages/citizen/Volunteer";
 import Learn from "./pages/citizen/Learn";
 import CitizenReportsManagement from "./pages/admin/CitizenReportsManagement";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -32,13 +33,13 @@ const App = () => (
             <Route path="learn" element={<Learn />} />
             <Route path="water-quality" element={<Dashboard />} />
             <Route path="reports" element={<CitizenReportsManagement />} />
-            <Route path="sensors" element={<Dashboard />} />
-            <Route path="drones" element={<Dashboard />} />
-            <Route path="waste" element={<Dashboard />} />
-            <Route path="safety" element={<Dashboard />} />
-            <Route path="biodiversity" element={<Dashboard />} />
-            <Route path="volunteers" element={<Dashboard />} />
-            <Route path="awareness" element={<Dashboard />} />
+            <Route path="sensors" element={<AdminDashboard />} />
+            <Route path="drones" element={<AdminDashboard />} />
+            <Route path="waste" element={<AdminDashboard />} />
+            <Route path="safety" element={<AdminDashboard />} />
+            <Route path="biodiversity" element={<AdminDashboard />} />
+            <Route path="volunteers" element={<AdminDashboard />} />
+            <Route path="awareness" element={<AdminDashboard />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
