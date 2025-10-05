@@ -78,7 +78,7 @@ export function AppSidebar({ userRole }: AppSidebarProps) {
                       to={item.url}
                       className={({ isActive }) =>
                         isActive 
-                          ? 'bg-primary text-primary-foreground font-medium hover:bg-primary/90' 
+                          ? 'bg-primary text-black font-medium hover:bg-primary/90' 
                           : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                       }
                     >
