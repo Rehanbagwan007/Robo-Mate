@@ -4,17 +4,17 @@ import { Droplets, Plane, AlertTriangle, Waves, Users, Leaf } from 'lucide-react
 
 const Dashboard = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
-      <div className="container mx-auto p-6 space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-background via-primary-light/10 to-primary/20">
+      <div className="container mx-auto p-4 md:p-6 space-y-4 md:space-y-6">
         {/* Header */}
         <div className="flex flex-col gap-2">
-          <h1 className="text-4xl font-bold tracking-tight">Smart Riverfront Management</h1>
-          <p className="text-muted-foreground">Real-time monitoring and control system</p>
+          <h1 className="text-2xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">Smart Riverfront Management</h1>
+          <p className="text-sm md:text-base text-muted-foreground">Real-time monitoring and control system</p>
         </div>
 
         {/* Stats Overview */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card className="border-primary/20 hover:border-primary/40 transition-colors">
+        <div className="grid gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+          <Card className="border-primary/20 hover:border-primary/40 transition-all hover:shadow-lg hover:shadow-primary/10 bg-gradient-to-br from-card to-primary/5">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Water Quality</CardTitle>
               <Droplets className="h-4 w-4 text-primary" />
@@ -25,7 +25,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-primary/20 hover:border-primary/40 transition-colors">
+          <Card className="border-primary/20 hover:border-primary/40 transition-all hover:shadow-lg hover:shadow-primary/10 bg-gradient-to-br from-card to-primary/5">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Active Drones</CardTitle>
               <Plane className="h-4 w-4 text-primary" />
@@ -36,7 +36,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-primary/20 hover:border-primary/40 transition-colors">
+          <Card className="border-primary/20 hover:border-primary/40 transition-all hover:shadow-lg hover:shadow-primary/10 bg-gradient-to-br from-card to-primary/5">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Active Alerts</CardTitle>
               <AlertTriangle className="h-4 w-4 text-destructive" />
@@ -47,7 +47,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-primary/20 hover:border-primary/40 transition-colors">
+          <Card className="border-primary/20 hover:border-primary/40 transition-all hover:shadow-lg hover:shadow-primary/10 bg-gradient-to-br from-card to-primary/5">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Flood Risk</CardTitle>
               <Waves className="h-4 w-4 text-primary" />
@@ -61,18 +61,18 @@ const Dashboard = () => {
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="overview" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="sensors">Water Quality</TabsTrigger>
             <TabsTrigger value="drones">Drones</TabsTrigger>
-            <TabsTrigger value="waste">Waste Detection</TabsTrigger>
+            <TabsTrigger value="waste">Waste</TabsTrigger>
             <TabsTrigger value="safety">Safety</TabsTrigger>
-            <TabsTrigger value="biodiversity">Biodiversity</TabsTrigger>
+            <TabsTrigger value="biodiversity">Bio</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-4">
-            <div className="grid gap-4 md:grid-cols-2">
-              <Card>
+            <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
+              <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
                 <CardHeader>
                   <CardTitle>Real-time Water Quality Map</CardTitle>
                   <CardDescription>IoT sensor locations and current readings</CardDescription>
@@ -82,7 +82,7 @@ const Dashboard = () => {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
                 <CardHeader>
                   <CardTitle>Recent Activity</CardTitle>
                   <CardDescription>Latest system events and updates</CardDescription>
@@ -108,7 +108,7 @@ const Dashboard = () => {
           </TabsContent>
 
           <TabsContent value="sensors">
-            <Card>
+            <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
               <CardHeader>
                 <CardTitle>Water Quality Monitoring</CardTitle>
                 <CardDescription>Real-time data from IoT sensors</CardDescription>
@@ -120,7 +120,7 @@ const Dashboard = () => {
           </TabsContent>
 
           <TabsContent value="drones">
-            <Card>
+            <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
               <CardHeader>
                 <CardTitle>Drone Fleet Management</CardTitle>
                 <CardDescription>Control and monitor autonomous water sampling drones</CardDescription>
@@ -132,7 +132,7 @@ const Dashboard = () => {
           </TabsContent>
 
           <TabsContent value="waste">
-            <Card>
+            <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
               <CardHeader>
                 <CardTitle>Floating Waste Detection</CardTitle>
                 <CardDescription>AI-powered waste identification and cleanup management</CardDescription>
@@ -144,7 +144,7 @@ const Dashboard = () => {
           </TabsContent>
 
           <TabsContent value="safety">
-            <Card>
+            <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
               <CardHeader>
                 <CardTitle>Safety Monitoring</CardTitle>
                 <CardDescription>Drowning detection and emergency response</CardDescription>
@@ -156,7 +156,7 @@ const Dashboard = () => {
           </TabsContent>
 
           <TabsContent value="biodiversity">
-            <Card>
+            <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
               <CardHeader>
                 <CardTitle>Biodiversity Tracking</CardTitle>
                 <CardDescription>Ecological monitoring and conservation insights</CardDescription>

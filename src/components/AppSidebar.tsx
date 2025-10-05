@@ -54,9 +54,10 @@ export function AppSidebar({ userRole }: AppSidebarProps) {
   };
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-border">
-      <div className="p-4 border-b border-border">
-        <SidebarTrigger />
+    <Sidebar collapsible="icon" className="border-r border-sidebar-border bg-sidebar">
+      <div className="p-4 border-b border-sidebar-border flex items-center justify-between">
+        <h2 className="text-lg font-bold text-sidebar-foreground">AquariSense</h2>
+        <SidebarTrigger className="text-sidebar-foreground" />
       </div>
       
       <SidebarContent>
@@ -70,7 +71,9 @@ export function AppSidebar({ userRole }: AppSidebarProps) {
                     <NavLink
                       to={item.url}
                       className={({ isActive }) =>
-                        isActive ? 'bg-primary/10 text-primary font-medium' : 'hover:bg-muted/50'
+                        isActive 
+                          ? 'bg-sidebar-accent text-sidebar-accent-foreground font-medium' 
+                          : 'text-sidebar-foreground hover:bg-sidebar-accent/50'
                       }
                     >
                       <item.icon className="h-4 w-4" />
@@ -84,8 +87,8 @@ export function AppSidebar({ userRole }: AppSidebarProps) {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="p-4 border-t border-border">
-        <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
+      <SidebarFooter className="p-4 border-t border-sidebar-border">
+        <Button variant="ghost" className="w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent" onClick={handleLogout}>
           <LogOut className="h-4 w-4 mr-2" />
           Logout
         </Button>
