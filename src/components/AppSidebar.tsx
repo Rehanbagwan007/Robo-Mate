@@ -60,7 +60,7 @@ export function AppSidebar({ userRole }: AppSidebarProps) {
           <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
             <Droplets className="h-5 w-5 text-primary-foreground" />
           </div>
-          <h2 className="text-lg font-bold text-sidebar-foreground group-data-[collapsible=icon]:hidden">AquariSense</h2>
+          <h2 className="text-lg font-bold text-sidebar-foreground group-data-[collapsible=icon]:hidden">AURA</h2>
         </div>
       </div>
       
