@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,14 +20,12 @@ const Login = () => {
 
  // ...existing code...
   useEffect(() => {
-    if(user) {
-     navigate('/dashboard');
-   }
-   // Always redirect to dashboard when visiting the login page
-   navigate('/dashboard');
+    // Always redirect to dashboard when visiting the login page,
+    // use replace to avoid keeping /login in the browser history.
+    navigate('/dashboard', { replace: true });
   }, [user, navigate]);
 // ...existing code...
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
@@ -39,8 +37,8 @@ const Login = () => {
         });
         if (error) throw error;
         setUser(data.user);
-        toast.success('Login successful!');
-        navigate('/dashboard');
+  toast.success('Login successful!');
+  navigate('/dashboard', { replace: true });
       } else {
         const { data, error } = await supabase.auth.signUp({
           email,
