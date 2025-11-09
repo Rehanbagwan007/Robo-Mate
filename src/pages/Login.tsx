@@ -18,11 +18,15 @@ const Login = () => {
   const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
 
+ // ...existing code...
   useEffect(() => {
-   
-      navigate('/dashboard');
- });
-
+    if(user) {
+     navigate('/dashboard');
+   }
+   // Always redirect to dashboard when visiting the login page
+   navigate('/dashboard');
+  }, [user, navigate]);
+// ...existing code...
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
