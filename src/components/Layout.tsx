@@ -28,6 +28,8 @@ export default function Layout() {
   useEffect(() => {
     const fetchUserRole = async () => {
       if (!user) {
+        // Auth is disabled for now — default to citizen role so the app is accessible.
+        setUserRole('citizen');
         setLoading(false);
         return;
       }
@@ -57,13 +59,6 @@ export default function Layout() {
     );
   }
 
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  if (!userRole) {
-    return <Navigate to="/login" replace />;
-  }
 
   return (
     <SidebarProvider defaultOpen={true}>

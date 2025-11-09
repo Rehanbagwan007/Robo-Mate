@@ -20,10 +20,10 @@ const Login = () => {
 
  // ...existing code...
   useEffect(() => {
-    // Always redirect to dashboard when visiting the login page,
-    // use replace to avoid keeping /login in the browser history.
-    navigate('/dashboard', { replace: true });
-  }, [user, navigate]);
+    // Always send visitors landing on /login to the app home (/) and
+    // replace history so /login is not kept. Auth is disabled for now.
+    navigate('/', { replace: true });
+  }, [navigate]);
 // ...existing code...
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -37,15 +37,15 @@ const Login = () => {
         });
         if (error) throw error;
         setUser(data.user);
-  toast.success('Login successful!');
-  navigate('/dashboard', { replace: true });
+        toast.success('Login successful!');
+        navigate('/', { replace: true });
       } else {
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
             data: { full_name: fullName },
-            emailRedirectTo: `${window.location.origin}/dashboard`,
+            emailRedirectTo: `${window.location.origin}/`,
           },
         });
         if (error) throw error;
