@@ -1,59 +1,55 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Droplets, TrendingUp, AlertTriangle, Activity, Waves } from 'lucide-react';
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line, BarChart, Bar } from 'recharts';
+import { Droplets, Wind, Beaker, AlertTriangle } from 'lucide-react';
 
-const phData = [
-  { time: '00:00', pH: 7.2, DO: 8.1, threshold: 7.0 },
-  { time: '04:00', pH: 7.3, DO: 8.0, threshold: 7.0 },
-  { time: '08:00', pH: 7.1, DO: 7.8, threshold: 7.0 },
-  { time: '12:00', pH: 6.9, DO: 7.5, threshold: 7.0 },
-  { time: '16:00', pH: 6.8, DO: 7.2, threshold: 7.0 },
-  { time: '20:00', pH: 6.7, DO: 6.9, threshold: 7.0 },
-  { time: '24:00', pH: 6.5, DO: 6.5, threshold: 7.0 },
+const waterQualityData = [
+  { time: '00:00', pH: 7.2, do: 8.1 },
+  { time: '04:00', pH: 7.1, do: 8.0 },
+  { time: '08:00', pH: 6.9, do: 7.8 },
+  { time: '12:00', pH: 6.8, do: 7.5 },
+  { time: '16:00', pH: 6.9, do: 7.6 },
+  { time: '20:00', pH: 7.0, do: 7.9 },
 ];
 
 const turbidityData = [
-  { zone: 'Zone A', turbidity: 12, threshold: 20 },
-  { zone: 'Zone B', turbidity: 15, threshold: 20 },
-  { zone: 'Zone C', turbidity: 18, threshold: 20 },
-  { zone: 'Zone D', turbidity: 28, threshold: 20 },
-  { zone: 'Zone E', turbidity: 14, threshold: 20 },
+    { zone: 'Zone A', turbidity: 12, threshold: 20 },
+    { zone: 'Zone B', turbidity: 15, threshold: 20 },
+    { zone: 'Zone C', turbidity: 18, threshold: 20 },
+    { zone: 'Zone D', turbidity: 24, threshold: 20 },
+    { zone: 'Zone E', turbidity: 14, threshold: 20 },
 ];
 
-const forecastData = [
-  { day: 'Mon', actual: 65, predicted: null },
-  { day: 'Tue', actual: 68, predicted: null },
-  { day: 'Wed', actual: 72, predicted: null },
-  { day: 'Thu', actual: null, predicted: 78 },
-  { day: 'Fri', actual: null, predicted: 82 },
-  { day: 'Sat', actual: null, predicted: 79 },
-  { day: 'Sun', actual: null, predicted: 75 },
-];
+const pollutionTrendData = [
+    { day: 'Mon', actual: 65, predicted: 68 },
+    { day: 'Tue', actual: 72, predicted: 70 },
+    { day: 'Wed', actual: 75, predicted: 74 },
+    { day: 'Thu', actual: null, predicted: 78 },
+    { day: 'Fri', actual: null, predicted: 76 },
+    { day: 'Sat', actual: null, predicted: 72 },
+    { day: 'Sun', actual: null, predicted: 70 },
+]
 
 export const WaterQualityDashboard = () => {
   return (
     <div className="space-y-6">
       {/* KPI Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Avg pH Level</CardTitle>
-            <Droplets className="h-4 w-4 text-primary" />
+            <Beaker className="h-4 w-4 text-orange-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">6.8</div>
-            <p className="text-xs text-destructive flex items-center gap-1 mt-1">
-              <TrendingUp className="h-3 w-3 rotate-180" />
-              Below threshold (7.0)
-            </p>
+            <div className="text-3xl font-bold text-orange-500">6.8</div>
+            <p className="text-xs text-muted-foreground mt-1">Below threshold (7.0)</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Dissolved Oxygen</CardTitle>
-            <Activity className="h-4 w-4 text-primary" />
+            <Wind className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold">7.2<span className="text-lg text-muted-foreground">mg/L</span></div>
@@ -61,177 +57,137 @@ export const WaterQualityDashboard = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Water Level</CardTitle>
-            <Waves className="h-4 w-4 text-primary" />
+            <Droplets className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold">2.4<span className="text-lg text-muted-foreground">m</span></div>
-            <p className="text-xs text-green-600 mt-1">Normal (2.0-3.5m)</p>
+            <p className="text-xs text-muted-foreground mt-1">Normal (2.0-3.5m)</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Flood Risk</CardTitle>
             <AlertTriangle className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">3<span className="text-lg text-muted-foreground">/10</span></div>
-            <p className="text-xs text-green-600 mt-1">Low risk</p>
+            <div className="text-3xl font-bold text-green-600">3<span className="text-lg text-muted-foreground">/10</span></div>
+            <p className="text-xs text-muted-foreground mt-1">Low risk</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Charts */}
-      <div className="grid gap-6 lg:grid-cols-2">
-        {/* pH & DO Trends */}
-        <Card>
-          <CardHeader>
-            <CardTitle>pH & DO Trends (24h)</CardTitle>
-            <CardDescription>Zone D - Real-time monitoring</CardDescription>
-          </CardHeader>
-          <CardContent>
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <CardHeader>
+                <CardTitle>pH & DO Trends (24h)</CardTitle>
+                <CardDescription>Zone D - Real-time monitoring</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                    <LineChart data={waterQualityData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="time" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Line type="monotone" dataKey="pH" stroke="#F97316" strokeWidth={2} name="pH" />
+                        <Line type="monotone" dataKey="do" stroke="#3B82F6" strokeWidth={2} name="DO (mg/L)" />
+                        <Line type="monotone" dataKey={() => 7.0} stroke="#E11D48" strokeDasharray="5 5" name="pH Threshold" dot={false} />
+                    </LineChart>
+                </ResponsiveContainer>
+            </CardContent>
+        </Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <CardHeader>
+                <CardTitle>Turbidity by Zone</CardTitle>
+                <CardDescription>Current levels vs threshold (20 NTU)</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                    <BarChart data={turbidityData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="zone" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="turbidity" fill="#3B82F6" name="Turbidity" />
+                        <Bar dataKey="threshold" fill="#EF4444" name="Threshold" />
+                    </BarChart>
+                </ResponsiveContainer>
+            </CardContent>
+        </Card>
+      </div>
+      
+      <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <CardHeader>
+            <CardTitle>Weekly Pollution Trend</CardTitle>
+        </CardHeader>
+        <CardContent>
             <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={phData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="time" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="pH" stroke="hsl(var(--primary))" strokeWidth={2} />
-                <Line type="monotone" dataKey="DO" stroke="hsl(var(--chart-2))" strokeWidth={2} />
-                <Line type="monotone" dataKey="threshold" stroke="#ef4444" strokeDasharray="5 5" />
-              </LineChart>
+                <LineChart data={pollutionTrendData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="day" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="actual" stroke="#3B82F6" strokeWidth={2} name="Actual" />
+                    <Line type="monotone" dataKey="predicted" stroke="#10B981" strokeDasharray="5 5" name="Predicted" />
+                </LineChart>
             </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        {/* Turbidity Analysis */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Turbidity by Zone</CardTitle>
-            <CardDescription>Current levels vs threshold (20 NTU)</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={turbidityData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="zone" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="turbidity" fill="hsl(var(--primary))" />
-                <Bar dataKey="threshold" fill="#ef4444" />
-              </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        {/* Predictive Forecast */}
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-primary" />
-              7-Day Pollution Forecast
-            </CardTitle>
-            <CardDescription>Predicted pollution index for Zone D</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="mb-4 p-3 rounded-lg bg-orange-50 dark:bg-orange-950/20 border border-orange-200">
-              <div className="flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 text-orange-600" />
-                <p className="text-sm font-medium text-orange-900 dark:text-orange-100">
-                  High pollution risk predicted in 36 hours for Zone D
-                </p>
-              </div>
-              <p className="text-xs text-orange-700 dark:text-orange-300 mt-1">
-                Turbidity spike correlates with increased STP discharge (85% confidence)
-              </p>
-            </div>
-            <ResponsiveContainer width="100%" height={250}>
-              <LineChart data={forecastData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="day" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="actual"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth={2}
-                  name="Actual"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="predicted"
-                  stroke="hsl(var(--chart-2))"
-                  strokeWidth={2}
-                  strokeDasharray="5 5"
-                  name="Predicted"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        {/* Source Correlation */}
-        <Card>
+        </CardContent>
+      </Card>
+      
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader>
             <CardTitle>Source Correlation Analysis</CardTitle>
             <CardDescription>Identified pollution sources</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="p-3 rounded-lg border">
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-sm font-medium">STP Discharge Impact</p>
-                <Badge variant="outline">85% confidence</Badge>
+          <CardContent className="space-y-4">
+            <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
+              <div>
+                <p className="font-medium text-sm">STP Discharge Impact</p>
+                <p className="text-xs text-muted-foreground">Turbidity spikes in Zone D correlate with increased STP discharge levels</p>
               </div>
-              <p className="text-xs text-muted-foreground">
-                Turbidity spikes in Zone D correlate with increased STP discharge levels
-              </p>
+              <Badge variant="outline">85% confidence</Badge>
             </div>
-            <div className="p-3 rounded-lg border">
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-sm font-medium">Rainfall Runoff</p>
-                <Badge variant="outline">72% confidence</Badge>
+            <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
+              <div>
+                <p className="font-medium text-sm">Rainfall Runoff</p>
+                <p className="text-xs text-muted-foreground">DO levels drop following heavy rainfall events</p>
               </div>
-              <p className="text-xs text-muted-foreground">
-                DO levels drop following heavy rainfall events
-              </p>
+              <Badge variant="outline">72% confidence</Badge>
             </div>
           </CardContent>
         </Card>
-
-        {/* Water Level & Flood Risk */}
-        <Card>
+        
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader>
             <CardTitle>Flood Risk Assessment</CardTitle>
             <CardDescription>48-hour outlook</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent>
             <div className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Current Level</span>
-                <span className="font-medium">2.4m</span>
-              </div>
-              <div className="h-2 bg-muted rounded-full overflow-hidden">
-                <div className="h-full bg-green-600" style={{ width: '48%' }} />
-              </div>
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span>Min (2.0m)</span>
-                <span>Max (5.0m)</span>
-              </div>
-            </div>
-            <div className="p-3 rounded-lg bg-green-50 dark:bg-green-950/20">
-              <p className="text-sm font-medium text-green-900 dark:text-green-100">
-                Flood Risk Factor: 3/10 (Low)
-              </p>
-              <p className="text-xs text-green-700 dark:text-green-300 mt-1">
-                No significant rainfall predicted in next 48 hours
-              </p>
+                <div className="flex justify-between items-baseline">
+                    <p className="text-sm text-muted-foreground">Current Level</p>
+                    <p className="text-2xl font-bold">2.4m</p>
+                </div>
+                 <div className="flex justify-between items-baseline">
+                    <p className="text-sm text-muted-foreground">Max (5.0m)</p>
+                    <p className="text-sm font-bold">5.0m</p>
+                </div>
+                <div className="h-4 flex-1 bg-muted rounded-full overflow-hidden">
+                  <div className="h-full bg-green-600" style={{ width: '48%' }} />
+                </div>
+                <div className="text-center pt-2">
+                    <p className="font-bold text-lg text-green-600">Flood Risk Factor: 3/10 (Low)</p>
+                    <p className="text-xs text-muted-foreground">No significant rainfall predicted in next 48 hours</p>
+                </div>
             </div>
           </CardContent>
         </Card>

@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Droplets, AlertTriangle, FileText, Activity, TrendingUp, MapPin, Camera } from 'lucide-react';
 import { AuraMap } from '@/components/AuraMap';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import ReportIssue from '../citizen/ReportIssue'; // Adjust path if necessary
 
 const reportStats = [
   { name: 'Pollution', value: 40, color: '#ef4444' },
@@ -19,11 +22,13 @@ const myReports = [
 ];
 
 export const CitizenDashboard = () => {
+  const [isReportModalOpen, setReportModalOpen] = useState(false);
+
   return (
     <div className="space-y-6">
       {/* KPI Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">River Health</CardTitle>
             <Droplets className="h-4 w-4 text-primary" />
@@ -34,7 +39,7 @@ export const CitizenDashboard = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Community Reports</CardTitle>
             <FileText className="h-4 w-4 text-primary" />
@@ -45,7 +50,7 @@ export const CitizenDashboard = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">My Reports</CardTitle>
             <Activity className="h-4 w-4 text-primary" />
@@ -56,7 +61,7 @@ export const CitizenDashboard = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Active Alerts</CardTitle>
             <AlertTriangle className="h-4 w-4 text-orange-600" />
@@ -71,7 +76,7 @@ export const CitizenDashboard = () => {
       {/* Main Content */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Citizen Report Map */}
-        <Card className="lg:col-span-2">
+        <Card className="lg:col-span-2 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <MapPin className="h-5 w-5 text-primary" />
@@ -85,23 +90,29 @@ export const CitizenDashboard = () => {
         </Card>
 
         {/* Submit New Report */}
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader>
             <CardTitle>Submit New Report</CardTitle>
             <CardDescription>Help us keep the river clean</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <Button className="w-full justify-start" size="lg">
-              <Camera className="h-5 w-5 mr-2" />
-              Report an Issue
-            </Button>
+            <Dialog open={isReportModalOpen} onOpenChange={setReportModalOpen}>
+              <DialogTrigger asChild>
+                <Button className="w-full justify-start" size="lg">
+                  <Camera className="h-5 w-5 mr-2" />
+                  Report an Issue
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[625px]">
+                <ReportIssue />
+              </DialogContent>
+            </Dialog>
             <div className="space-y-2 text-sm text-muted-foreground">
               <p>Quick tips:</p>
               <ul className="list-disc list-inside space-y-1 text-xs">
                 <li>Take a clear photo</li>
                 <li>Enable location services</li>
                 <li>Describe the issue clearly</li>
-                <li>We'll respond within 24 hours</li>
               </ul>
             </div>
           </CardContent>
@@ -111,7 +122,7 @@ export const CitizenDashboard = () => {
       {/* Report Statistics & My Reports */}
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Report Statistics */}
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader>
             <CardTitle>Community Report Statistics</CardTitle>
             <CardDescription>Last 7 days breakdown</CardDescription>
@@ -154,7 +165,7 @@ export const CitizenDashboard = () => {
         </Card>
 
         {/* My Reports */}
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader>
             <CardTitle>My Reports</CardTitle>
             <CardDescription>Track your submissions</CardDescription>
@@ -189,7 +200,7 @@ export const CitizenDashboard = () => {
       </div>
 
       {/* Public River Health Overview */}
-      <Card>
+      <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-primary" />

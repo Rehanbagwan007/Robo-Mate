@@ -1,34 +1,39 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, TrendingUp, Users, CheckCircle2, MapPin, Droplets, Activity } from 'lucide-react';
+import { AlertTriangle, TrendingUp, Users, CheckCircle2, MapPin, Droplets, Activity, Inbox } from 'lucide-react';
 import { AuraMap } from '@/components/AuraMap';
+import { useAlertStore } from '@/store/useAlertStore';
 
 export const UCCCDashboard = () => {
-  const alerts = [
+  const { alerts } = useAlertStore();
+
+  const staticAlerts = [
     { id: 1, type: 'Turbidity spike', zone: 'Zone D', time: '5 min ago', severity: 'high' },
     { id: 2, type: 'Waste accumulation', zone: 'Zone C', time: '12 min ago', severity: 'medium' },
     { id: 3, type: 'Drowning alert', zone: 'Promenade Cam 2', time: '45 min ago', severity: 'critical' },
   ];
 
+  const allAlerts = [...alerts.map(a => ({ ...a, type: a.title, zone: a.location_name, time: 'Just now', severity: a.category })), ...staticAlerts];
+
   return (
     <div className="space-y-6">
       {/* KPI Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Active Alerts</CardTitle>
             <AlertTriangle className="h-4 w-4 text-destructive" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">7</div>
+            <div className="text-3xl font-bold">{allAlerts.length}</div>
             <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
               <span className="text-destructive">3 critical</span> • 4 warning
             </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Teams Dispatched</CardTitle>
             <Users className="h-4 w-4 text-green-600" />
@@ -39,7 +44,7 @@ export const UCCCDashboard = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Resolved in 24h</CardTitle>
             <CheckCircle2 className="h-4 w-4 text-green-600" />
@@ -53,7 +58,7 @@ export const UCCCDashboard = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">River Health Score</CardTitle>
             <Activity className="h-4 w-4 text-primary" />
@@ -71,7 +76,7 @@ export const UCCCDashboard = () => {
       {/* Main Content Grid */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Interactive Map */}
-        <Card className="lg:col-span-2">
+        <Card className="lg:col-span-2 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <MapPin className="h-5 w-5 text-primary" />
@@ -85,7 +90,7 @@ export const UCCCDashboard = () => {
         </Card>
 
         {/* Alert Feed */}
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-destructive" />
@@ -94,38 +99,46 @@ export const UCCCDashboard = () => {
             <CardDescription>Live system notifications</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            {alerts.map((alert) => (
-              <div
-                key={alert.id}
-                className="p-3 rounded-lg border bg-card hover:bg-muted/50 transition-colors cursor-pointer"
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Badge
-                        variant={alert.severity === 'critical' ? 'destructive' : 'default'}
-                        className="text-xs"
-                      >
-                        {alert.severity}
-                      </Badge>
-                      <span className="text-xs text-muted-foreground">{alert.time}</span>
+            {allAlerts.length > 0 ? (
+              allAlerts.map((alert) => (
+                <div
+                  key={alert.id}
+                  className="p-3 rounded-lg border bg-card hover:bg-muted/50 transition-colors cursor-pointer"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Badge
+                          variant={alert.severity === 'critical' ? 'destructive' : 'default'}
+                          className="text-xs"
+                        >
+                          {alert.severity}
+                        </Badge>
+                        <span className="text-xs text-muted-foreground">{alert.time}</span>
+                      </div>
+                      <p className="text-sm font-medium">{alert.type}</p>
+                      <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+                        <MapPin className="h-3 w-3" />
+                        {alert.zone}
+                      </p>
                     </div>
-                    <p className="text-sm font-medium">{alert.type}</p>
-                    <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
-                      <MapPin className="h-3 w-3" />
-                      {alert.zone}
-                    </p>
                   </div>
                 </div>
+              ))
+            ) : (
+              <div className="text-center text-muted-foreground py-10">
+                <Inbox className="h-12 w-12 mx-auto text-gray-400" />
+                <p className="mt-4 text-sm">No new alerts</p>
+                <p className="text-xs">Citizen reports will appear here in real-time.</p>
               </div>
-            ))}
+            )}
           </CardContent>
         </Card>
       </div>
 
       {/* Predictive Insights & Quick Actions */}
       <div className="grid gap-6 md:grid-cols-2">
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <TrendingUp className="h-5 w-5 text-primary" />
@@ -155,7 +168,7 @@ export const UCCCDashboard = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <CardHeader>
             <CardTitle>Quick Actions</CardTitle>
             <CardDescription>Common tasks</CardDescription>
